@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+     
+     
+    <!-- @Aspect 에노테이션을 사용 하기 위해 설정  -->
+    <aop:aspectj-autoproxy proxy-target-class="true"/> 
+     
+    <!-- 공통 기능을 제공할 클래스를 빈으로 등록  -->
+    <bean id="exeTimeAspect" class="aspect.ExeTimeAspect2"/>
+    
+    <!-- pointcut에 포함된다 -->
+    <!-- but was actually of type [com.sun.proxy.$Proxy2] 예외 발생 -->
+    <!-- $Proxy2 Calculator 인터페이스를 상속 받음  -->
+    <bean id="impeCal" class="chap07.ImpeCalculator">
+    </bean>
+    
+    <!-- pointcut에 포함된다 -->
+    <bean id="recCal" class="chap07.RecCalculator">
+    </bean>    
+    
+</beans>
+

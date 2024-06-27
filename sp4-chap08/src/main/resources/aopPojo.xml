@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+     
+    <!-- 공통 기능을 제공할 클래스를 빈으로 등록  -->
+    <bean id="exeTimeAspect" class="aspect.ExeTimeAspect"/>
+    
+    <!-- Aspect 설정 : Advice를 어떤 Pointcut에 적용할 지 선정  -->
+    <!-- 1. 공통 기능으로 사용할 빈 지정  - exeTimeAspect -->
+    <!-- 2. publicMethod인 pointcut을 지정, 범위는 chap07 패키지 및 그 하위 패키지에 있는 모든  public 메서드가 된다. -->
+    <!-- 3. poincut 정의한 exeTimeAspect 빈 객체의 measure() 메서드를 이용해서 공통 기능으로 사용한다. -->
+    <aop:config proxy-target-class="true">
+        <aop:aspect id="measureAspect" ref="exeTimeAspect">
+            <aop:pointcut id="publicMethod" expression="execution(public * chap07..*(..))"/>
+            <aop:around method="measure" pointcut-ref="publicMethod"/>
+        </aop:aspect>
+    </aop:config>
+    
+    <!-- pointcut에 포함된다 -->
+    <bean id="impeCal" class="chap07.ImpeCalculator">
+    </bean>
+    
+    <!-- pointcut에 포함된다 -->
+    <bean id="recCal" class="chap07.RecCalculator">
+    </bean>    
+    
+</beans>
+
